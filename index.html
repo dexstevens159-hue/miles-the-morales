@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 3rd Monthsary, My Love!</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="image/favicon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #ffdde9;
+            overflow-x: hidden;
+        }
+
+        /* Fade-in Animation */
+        .fade { opacity: 0; animation: fadeIn 1.2s forwards; }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #ffbad2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 9999;
+            animation: fadeOut 1s ease forwards;
+            animation-delay: 3s;
+        }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+
+        .loader-heart {
+            font-size: 3rem;
+            animation: heartbeat 1s infinite;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        /* Envelope Section */
+        .envelope-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background: #ff7aa8;
+            position: relative;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: 0.3s ease;
+        }
+        .envelope:hover { transform: scale(1.05); }
+
+        .flap {
+            width: 100%;
+            height: 100%;
+            background: #ff8bb6;
+            clip-path: polygon(0 0, 100% 0, 50% 60%);
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: 0.8s;
+        }
+        .envelope.open .flap {
+            transform: translateY(-120%) rotateX(180deg);
+            transform-origin: top;
+        }
+
+        /* Letter */
+        .letter {
+            width: 90%;
+            max-width: 650px;
+            background: white;
+            padding: 25px;
+            margin: 20px auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            display: none;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* Hearts Background */
+        .heart-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart-bg span {
+            position: absolute;
+            color: #ff5d9e;
+            animation: floatHearts 8s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatHearts {
+            from { transform: translateY(100vh) rotate(0deg); }
+            to { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        /* Music Button */
+        #musicBtn {
+            margin-top: 15px;
+            padding: 10px 22px;
+            background: #ff5d9e;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        #musicBtn:hover { background: #e24787; }
+
+        /* Surprise Button */
+        #surpriseBtn {
+            margin-top: 15px;
+            padding: 10px 22px;
+            background: #ff2d75;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        #surpriseBtn:hover { background: #d71c60; }
+
+        /* Collage Section */
+        .collage {
+            width: 90%;
+            max-width: 700px;
+            margin: 40px auto;
+            display: none;
+            text-align: center;
+        }
+        .collage img {
+            width: 200px;
+            height: auto;
+            margin: 5px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-heart">❤️</div>
+        <p style="font-size: 1.2rem;">Loading something special...</p>
+    </div>
+
+    <!-- Background Hearts -->
+    <div class="heart-bg" id="heartBg"></div>
+
+    <!-- Envelope Section -->
+    <div class="envelope-container fade" id="envelopeSection">
+        <h1 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #ff2d75;">
+            Happy 3rd Monthsary, My Love! 💖
+        </h1>
+        <p>Tap the envelope to open your letter ✉️</p>
+
+        <div class="envelope" id="envelope">
+            <div class="flap"></div>
+        </div>
+
+        <button id="musicBtn">Play Music 🎵</button>
+        <button id="surpriseBtn">Click for Surprise 🎁</button>
+    </div>
+
+    <!-- Love Letter -->
+    <div class="letter fade" id="letter">
+         <p>My dearest Kasandra Claire Morales,</p>
+        <p>Three months. It sounds like a fleeting moment in the grand tapestry of time, yet for me, these past ninety days have woven a story so rich, so vibrant, and so profoundly beautiful that it feels like a lifetime of cherished memories already. Each sunrise we've shared, each whispered conversation under the moonlight, each shared laugh that echoes in my heart has painted my world in hues I never knew existed. You, my love, are the masterpiece that fills my every day with an unparalleled sense of peace, an effervescent joy, and a steadfast anchor that grounds me even when the world feels chaotic.</p>
+        <p>Thank you, my darling Kasandra, for the countless ways you simply are. Thank you for the quiet strength you possess, for the way your eyes hold a universe of understanding when I speak, for the gentle touch of your hand that calves my soul, and for the effortless way you make me feel like the most treasured person in existence. You have gifted me experiences that shimmer with a unique magic, and awakened feelings within me that I never imagined finding so soon, or so deeply. Being with you has unveiled a profound truth: that true love isn't about grand gestures or perfect scenarios, but about the unwavering choice of one soul to cherish and uplift another, day in and day out, through every ebb and flow.</p>
+        <p>I adore the symphony of our shared laughter, the boundless freedom we find in our conversations that dance from the whimsical to the profound, the unwavering support we offer each other, and yes, even the sweet, shy blushes and giddy excitement that remind me of our very first encounter. With you, the mundane transforms into the magnificent. A spontaneous text message, a simple "good morning" greeting, or your thoughtful late-night messages each becomes a precious gem, radiating warmth and imbuing my life with a profound sense of purpose and meaning. You have a gift for making everything feel like a sacred moment.</p>
+        <p>As we stand here, celebrating our three-month anniversary, I want to etch this promise into your heart: I am not going anywhere. My commitment to you is unwavering. Today, tomorrow, and for every single tomorrow that unfolds, my choice is you. I yearn to grow alongside you, to learn the intricate nuances of your spirit, to chase our wildest dreams hand-in-hand, and to face whatever adventures or challenges life may present, knowing we are a united front. I am immensely proud of the foundation we have meticulously built, and my heart overflows with anticipation for the breathtaking future we will architect together.</p>
+        <p>Thank you for illuminating my world with your radiant presence. Thank you for loving me with a tenderness that is uniquely yours. Thank you for inspiring me to reach for the best version of myself, simply by being you.</p>
+        <p>Here's to us to three months of a love that deepens with every passing moment, three months of tender care, and three months of memories that will forever be etched in my soul… and here's to countless more months and years, filled with even greater love and shared dreams. I love you more than words can possibly convey. Happy 3rd Monthsary, my most cherished Kasandra. 💙✨</p>
+        <p>Forever yours,<br>Lance Bailon</p>
+    </div>
+
+    <!-- Collage Section -->
+    <div class="collage fade" id="collage">
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #ff2d75;">
+            Our Memories ❤️
+        </h2>
+        <!-- REPLACE THESE PATHS WITH YOUR OWN IMAGES -->
+        <img src="images/pics1.jpg" alt="Memory 1">
+        <img src="images/pic2.jpg" alt="Memory 2">
+        <img src="images/pic3.jpg" alt="Memory 3">
+        <img src="images/pic4.jpg" alt="Memory 4">
+        <img src="images/pic5.jpg" alt="Memory 5">
+        <img src="images/pic6.jpg" alt="Memory 6">
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" preload="auto" loop>
+        <source src="audio/yung kai - blue (Lyrics).mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Confetti Script -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        /* Floating Hearts */
+        function createHearts() {
+            const container = document.getElementById("heartBg");
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement("span");
+                heart.innerHTML = "💕";
+                heart.style.left = Math.random() * 100 + "%";
+                heart.style.fontSize = (Math.random() * 30 + 10) + "px";
+                heart.style.animationDuration = (Math.random() * 5 + 5) + "s";
+                container.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        /* Envelope + Letter Logic + Confetti */
+        const envelope = document.getElementById("envelope");
+        const letter = document.getElementById("letter");
+
+        envelope.addEventListener("click", () => {
+            envelope.classList.toggle("open");
+
+            // Confetti Burst
+            confetti({
+                particleCount: 180,
+                spread: 90,
+                origin: { y: 0.4 }
+            });
+
+            // Reveal Letter
+            setTimeout(() => {
+                letter.style.display = "block";
+                window.scrollTo({ top: letter.offsetTop, behavior: "smooth" });
+            }, 850);
+        });
+
+        /* Music Controls */
+        const music = document.getElementById("bgMusic");
+        const musicBtn = document.getElementById("musicBtn");
+
+        musicBtn.addEventListener("click", () => {
+            if (music.paused) {
+                music.play();
+                musicBtn.textContent = "Pause Music ❌";
+            } else {
+                music.pause();
+                musicBtn.textContent = "Play Music 🎵";
+            }
+        });
+
+        /* Surprise Button + Collage Reveal */
+        const surpriseBtn = document.getElementById("surpriseBtn");
+        const collage = document.getElementById("collage");
+
+        surpriseBtn.addEventListener("click", () => {
+            collage.style.display = "block";
+            window.scrollTo({ top: collage.offsetTop, behavior: "smooth" });
+
+            confetti({
+                particleCount: 300,
+                spread: 100,
+                origin: { y: 0.3 }
+            });
+        });
+    </script>
+
+</body>
+</html>
